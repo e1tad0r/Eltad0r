@@ -36,9 +36,48 @@
             min-height: 100vh;
         }
 
+        /* Кнопка переключения языка в ПРАВОМ верхнем углу */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .lang-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: var(--surface-color);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Segoe UI', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+        }
+
         .profile-container {
             text-align: center;
             margin-bottom: 32px;
+            margin-top: 20px;
         }
 
         .profile-img {
@@ -70,6 +109,7 @@
             display: flex;
             flex-direction: column;
             gap: 32px;
+            flex: 1;
         }
 
         .links-group {
@@ -91,6 +131,9 @@
             gap: 14px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: var(--transition);
+            cursor: pointer;
+            font-family: inherit;
+            text-align: left;
         }
 
         .btn:hover {
@@ -219,6 +262,32 @@
             color: #60a5fa;
         }
 
+        /* Footer */
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .footer-text {
+            margin-bottom: 4px;
+        }
+
+        .footer-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
         .toast {
             position: fixed;
             bottom: 30px;
@@ -244,52 +313,67 @@
 
 <body>
 
+    <!-- Кнопка переключения языка -->
+    <div class="lang-switcher">
+        <button class="lang-btn" onclick="toggleLanguage()">
+            <span class="lang-dot"></span>
+            <span id="langText">UZB</span>
+        </button>
+    </div>
+
     <div class="profile-container">
         <img src="logo.jpg" alt="Logo" class="profile-img">
-        <h1>Yunusov Tech</h1>
-        <p>Сборка ПК | Софт | Решения</p>
+        <h1 id="name">Yunusov Tech</h1>
+        <p id="subtitle">Сборка ПК | Софт | Решения</p>
     </div>
 
     <div class="content-container">
         <!-- Ссылки -->
         <div class="links-group">
-            <a href="https://t.me/YunusovTech" class="btn">
-                <span class="icon-box color-tg"><i class="fa-brands fa-telegram"></i></span> ТГ-канал (Железо)
+            <a href="https://t.me/YunusovTech" class="btn" id="link-channel-hw">
+                <span class="icon-box color-tg"><i class="fa-brands fa-telegram"></i></span>
+                <span id="text-channel-hw">ТГ-канал (Железо)</span>
             </a>
 
-            <a href="https://t.me/SofTech_ahangaran" class="btn">
-                <span class="icon-box color-tg"><i class="fa-brands fa-telegram"></i></span> ТГ-канал (Софт)
+            <a href="https://t.me/SofTech_ahangaran" class="btn" id="link-channel-sw">
+                <span class="icon-box color-tg"><i class="fa-brands fa-telegram"></i></span>
+                <span id="text-channel-sw">ТГ-канал (Софт)</span>
             </a>
 
-            <a href="https://t.me/Eltad0r" class="btn">
-                <span class="icon-box color-tg"><i class="fa-solid fa-comment-dots"></i></span> Написать в Личку (тг)
+            <a href="https://t.me/Eltad0r" class="btn" id="link-dm">
+                <span class="icon-box color-tg"><i class="fa-solid fa-comment-dots"></i></span>
+                <span id="text-dm">Написать в Личку (тг)</span>
             </a>
 
-            <a href="https://www.instagram.com/e1tad0r/" class="btn">
-                <span class="icon-box color-inst"><i class="fa-brands fa-instagram"></i></span> Instagram
+            <a href="https://www.instagram.com/e1tad0r/" class="btn" id="link-instagram">
+                <span class="icon-box color-inst"><i class="fa-brands fa-instagram"></i></span>
+                <span id="text-instagram">Instagram</span>
             </a>
 
-            <a href="tel:+998931942706" class="btn">
-                <span class="icon-box color-phone"><i class="fa-solid fa-phone"></i></span> Позвонить мне
+            <a href="tel:+998931942706" class="btn" id="link-phone">
+                <span class="icon-box color-phone"><i class="fa-solid fa-phone"></i></span>
+                <span id="text-phone">Позвонить мне</span>
             </a>
 
-            <a href="https://vk.com/id749281163" class="btn" target="_blank" rel="noopener noreferrer">
-                <span class="icon-box color-vk"><i class="fa-brands fa-vk"></i></span> ВКонтакте
+            <a href="https://vk.com/id749281163" class="btn" target="_blank" rel="noopener noreferrer" id="link-vk">
+                <span class="icon-box color-vk"><i class="fa-brands fa-vk"></i></span>
+                <span id="text-vk">ВКонтакте</span>
             </a>
 
-            <button class="btn" onclick="copyDiscord(this)"
-                style="cursor: pointer; text-align: left; font-family: inherit; width: 100%;">
-                <span class="icon-box color-discord"><i class="fa-brands fa-discord"></i></span> Discord
+            <button class="btn" onclick="copyDiscord(this)" id="btn-discord">
+                <span class="icon-box color-discord"><i class="fa-brands fa-discord"></i></span>
+                <span id="text-discord">Discord</span>
             </button>
 
             <a href="https://steamcommunity.com/profiles/76561199367237860/" class="btn" target="_blank"
-                rel="noopener noreferrer">
-                <span class="icon-box color-steam"><i class="fa-brands fa-steam"></i></span> Steam
+                rel="noopener noreferrer" id="link-steam">
+                <span class="icon-box color-steam"><i class="fa-brands fa-steam"></i></span>
+                <span id="text-steam">Steam</span>
             </a>
         </div>
 
         <!-- Реквизиты -->
-        <h2 class="section-title">Номер карты (Мультикард)</h2>
+        <h2 class="section-title" id="card-section-title">Номер карты (Мультикард)</h2>
 
         <div class="payment-cards">
             <div class="compact-card">
@@ -297,18 +381,93 @@
                     <span class="card-title"><span class="visa">VISA</span> / <span class="humo">HUMO</span></span>
                     <span class="card-number" id="main-card">4073 4200 4799 5760</span>
                 </div>
-                <button class="copy-btn-compact" onclick="copyText('main-card', this)">Copy</button>
+                <button class="copy-btn-compact" onclick="copyText('main-card', this)" id="copy-btn">Copy</button>
             </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-text" id="footer-text">Сделано при поддержке</div>
+        <a href="https://onetouchit-2026.github.io/Catalog/" target="_blank" class="footer-link" id="footer-link">Официальный каталог</a>
     </div>
 
     <div id="toast" class="toast">Номер скопирован!</div>
 
     <script>
+        let currentLang = 'ru';
+
+        const translations = {
+            ru: {
+                langBtn: 'UZB',
+                name: 'Yunusov Tech',
+                subtitle: 'Сборка ПК | Софт | Решения',
+                channelHw: 'ТГ-канал (Железо)',
+                channelSw: 'ТГ-канал (Софт)',
+                dm: 'Написать в Личку (тг)',
+                instagram: 'Instagram',
+                phone: 'Позвонить мне',
+                vk: 'ВКонтакте',
+                discord: 'Discord',
+                steam: 'Steam',
+                cardSection: 'Номер карты (Мультикард)',
+                copyBtn: 'Copy',
+                copied: 'Copied!',
+                discordCopied: 'Скопирован: Eltad0r!',
+                footerText: 'Сделано при поддержке',
+                footerLink: 'Официальный каталог'
+            },
+            uz: {
+                langBtn: 'RU',
+                name: 'Yunusov Tech',
+                subtitle: "PKni yig'ish | Dastur | Yechimlar",
+                channelHw: 'TG-kanali (Qattiq disk)',
+                channelSw: 'TG-kanali (Dastur)',
+                dm: 'Shaxsiy xabar yozing (tg)',
+                instagram: 'Instagram',
+                phone: 'Menga qo\'ng\'iroq qiling',
+                vk: 'VKontakte',
+                discord: 'Discord',
+                steam: 'Steam',
+                cardSection: 'Karta raqami (Multikarta)',
+                copyBtn: 'Nusxa olish',
+                copied: 'Nusxalandi!',
+                discordCopied: 'Nusxalandi: Eltad0r!',
+                footerText: 'Qo\'llab-quvvatlash bilan amalga oshirildi',
+                footerLink: 'Rasmiy katalog'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ru' ? 'uz' : 'ru';
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const lang = translations[currentLang];
+
+            document.getElementById('langText').textContent = lang.langBtn;
+            document.getElementById('name').textContent = lang.name;
+            document.getElementById('subtitle').textContent = lang.subtitle;
+            document.getElementById('text-channel-hw').textContent = lang.channelHw;
+            document.getElementById('text-channel-sw').textContent = lang.channelSw;
+            document.getElementById('text-dm').textContent = lang.dm;
+            document.getElementById('text-instagram').textContent = lang.instagram;
+            document.getElementById('text-phone').textContent = lang.phone;
+            document.getElementById('text-vk').textContent = lang.vk;
+            document.getElementById('text-discord').textContent = lang.discord;
+            document.getElementById('text-steam').textContent = lang.steam;
+            document.getElementById('card-section-title').textContent = lang.cardSection;
+            document.getElementById('copy-btn').textContent = lang.copyBtn;
+            document.getElementById('footer-text').textContent = lang.footerText;
+            document.getElementById('footer-link').textContent = lang.footerLink;
+
+            document.documentElement.lang = currentLang;
+        }
+
         function copyText(elementId, btnElement) {
             const textToCopy = document.getElementById(elementId).innerText.replace(/\s+/g, '');
 
-            // Запасной метод через textarea (для лучшей совместимости на мобильных)
             const copyToClipboardFallback = (text) => {
                 const textArea = document.createElement("textarea");
                 textArea.value = text;
@@ -318,15 +477,13 @@
                 textArea.select();
                 try {
                     document.execCommand('copy');
-                } catch (err) {
-                    console.error('Fallback: Oops, unable to copy', err);
-                }
+                } catch (err) { }
                 document.body.removeChild(textArea);
             };
 
             const handleSuccess = () => {
                 const originalText = btnElement.innerText;
-                btnElement.innerText = 'Copied!';
+                btnElement.innerText = translations[currentLang].copied;
                 btnElement.style.background = '#34d399';
                 btnElement.style.color = '#064e3b';
 
@@ -345,7 +502,6 @@
                 navigator.clipboard.writeText(textToCopy)
                     .then(handleSuccess)
                     .catch(err => {
-                        console.error('Failed to copy text: ', err);
                         copyToClipboardFallback(textToCopy);
                         handleSuccess();
                     });
@@ -372,16 +528,16 @@
             };
 
             const handleSuccess = () => {
-                const originalText = btnElement.innerHTML;
-                btnElement.innerHTML = '<span class="icon-box color-discord"><i class="fa-solid fa-check" style="color: #064e3b"></i></span> <span style="color: #064e3b">Copied Eltad0r!</span>';
+                const originalHTML = btnElement.innerHTML;
+                btnElement.innerHTML = '<span class="icon-box color-discord"><i class="fa-solid fa-check" style="color: #064e3b"></i></span> <span style="color: #064e3b">' + translations[currentLang].discordCopied + '</span>';
                 btnElement.style.background = '#34d399';
 
                 const toast = document.getElementById('toast');
-                toast.innerText = 'Ник Discord скопирован!';
+                toast.innerText = translations[currentLang].discordCopied;
                 toast.classList.add('show');
 
                 setTimeout(() => {
-                    btnElement.innerHTML = originalText;
+                    btnElement.innerHTML = originalHTML;
                     btnElement.style.background = '';
                     toast.classList.remove('show');
                     setTimeout(() => {
@@ -400,6 +556,9 @@
                 handleSuccess();
             }
         }
+
+        // Инициализация
+        updateLanguage();
     </script>
 </body>
 
