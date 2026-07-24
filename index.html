@@ -4,7 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yunusov Tech | Контакты</title>
+
+    <!-- ===== SEO: основные метатеги ===== -->
+    <title>Ahmed Ahangaran (Eltad0r) — Yunusov Tech | Сборка ПК, софт, IT-решения | OneTouch_IT</title>
+    <meta name="description" content="Ahmed Ahangaran (Eltador, Eltad0r) — сборка ПК, установка софта и IT-решения в Ахангаране. Каналы SofTech Ahangaran и Yunusov Tech, сотрудник OneTouch_IT (One Touch IT). Контакты, соцсети и реквизиты для связи и оплаты.">
+    <meta name="keywords" content="Ahmed Ahangaran, Ахмед Ахангаран, Eltador, Eltad0r, Эльтадор, SofTech, SofTech Ahangaran, Софтех, Yunusov Tech, OneTouch, OneTouch_IT, One Touch IT, Ван Тач, Воун Тоуч, сборка ПК Ахангаран, установка софта Ахангаран, IT решения Узбекистан">
+    <meta name="author" content="Ahmed Ahangaran (Eltad0r)">
+    <link rel="canonical" href="https://onetouchit-2026.github.io/Contacts/">
+    <!-- ⚠️ Замени canonical и og:url на реальный адрес, где будет лежать эта страница -->
+
+    <!-- ===== Open Graph (для соцсетей / мессенджеров) ===== -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Ahmed Ahangaran (Eltad0r) — Yunusov Tech | OneTouch_IT">
+    <meta property="og:description" content="Сборка ПК, софт и IT-решения. Каналы SofTech Ahangaran и Yunusov Tech. Контакты, соцсети и реквизиты.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:url" content="https://onetouchit-2026.github.io/Contacts/">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:locale:alternate" content="uz_UZ">
+
+    <!-- ===== Twitter Card ===== -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Ahmed Ahangaran (Eltad0r) — Yunusov Tech">
+    <meta name="twitter:description" content="Сборка ПК, софт и IT-решения. OneTouch_IT.">
+    <meta name="twitter:image" content="logo.jpg">
+
+    <!-- ===== JSON-LD структурированные данные (главное для поиска по разным именам) ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ahmed Ahangaran",
+      "alternateName": [
+        "Eltador",
+        "Eltad0r",
+        "Эльтадор",
+        "Ахмед Ахангаран",
+        "Yunusov Tech",
+        "SofTech Ahangaran",
+        "Софтех"
+      ],
+      "url": "https://onetouchit-2026.github.io/Contacts/",
+      "image": "https://onetouchit-2026.github.io/Contacts/logo.jpg",
+      "jobTitle": "Специалист по сборке ПК и IT-решениям",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "OneTouch_IT",
+        "alternateName": ["One Touch IT", "Ван Тач", "Воун Тоуч"],
+        "url": "https://onetouchit-2026.github.io/Catalog/"
+      },
+      "sameAs": [
+        "https://t.me/YunusovTech",
+        "https://t.me/SofTech_ahangaran",
+        "https://t.me/Eltad0r",
+        "https://www.instagram.com/e1tad0r/",
+        "https://vk.com/id749281163",
+        "https://steamcommunity.com/profiles/76561199367237860/"
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -101,6 +159,21 @@
             color: var(--text-secondary);
             font-size: 0.95rem;
             font-weight: 500;
+        }
+
+        /* SEO-текст: физически на странице и читается поисковиками/скринридерами,
+           но визуально скрыт от обычных пользователей ("visually-hidden" техника,
+           не путать с display:none — так делают для доступности, это не накрутка) */
+        .seo-bio {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         .content-container {
@@ -326,10 +399,16 @@
     </div>
 
     <div class="profile-container">
-        <img src="logo.jpg" alt="Logo" class="profile-img">
+        <img src="logo.jpg" alt="Ahmed Ahangaran (Eltad0r) — Yunusov Tech, OneTouch_IT" class="profile-img">
         <h1 id="name">Yunusov Tech</h1>
         <p id="subtitle">Сборка ПК | Софт | Решения</p>
     </div>
+
+    <!-- SEO: видимый текст с ключевыми именами/фразами, чтобы поисковики могли их проиндексировать -->
+    <p class="seo-bio" id="seo-bio">
+        <b>Ahmed Ahangaran</b> (он же <b>Eltador / Eltad0r</b>) — сборка ПК, установка софта и IT-решения.
+        Автор каналов <b>SofTech Ahangaran</b> и <b>Yunusov Tech</b>, сотрудник <b>OneTouch_IT</b>.
+    </p>
 
     <div class="content-container">
         <!-- Ссылки -->
@@ -406,6 +485,7 @@
                 langBtn: 'UZB',
                 name: 'Yunusov Tech',
                 subtitle: 'Сборка ПК | Софт | Решения',
+                bio: '<b>Ahmed Ahangaran</b> (он же <b>Eltador / Eltad0r</b>) — сборка ПК, установка софта и IT-решения. Автор каналов <b>SofTech Ahangaran</b> и <b>Yunusov Tech</b>, сотрудник <b>OneTouch_IT</b>.',
                 channelHw: 'ТГ-канал (Железо)',
                 channelSw: 'ТГ-канал (Софт)',
                 dm: 'Написать в Личку (тг)',
@@ -425,6 +505,7 @@
                 langBtn: 'RU',
                 name: 'Yunusov Tech',
                 subtitle: "PKni yig'ish | Dastur | Yechimlar",
+                bio: '<b>Ahmed Ahangaran</b> (u ham <b>Eltador / Eltad0r</b>) — kompyuter yig\'ish, dastur o\'rnatish va IT-yechimlar. <b>SofTech Ahangaran</b> va <b>Yunusov Tech</b> kanallari muallifi, <b>OneTouch_IT</b> xodimi.',
                 channelHw: 'TG-kanali (Qattiq disk)',
                 channelSw: 'TG-kanali (Dastur)',
                 dm: 'Shaxsiy xabar yozing (tg)',
@@ -453,6 +534,7 @@
             document.getElementById('langText').textContent = lang.langBtn;
             document.getElementById('name').textContent = lang.name;
             document.getElementById('subtitle').textContent = lang.subtitle;
+            document.getElementById('seo-bio').innerHTML = lang.bio;
             document.getElementById('text-channel-hw').textContent = lang.channelHw;
             document.getElementById('text-channel-sw').textContent = lang.channelSw;
             document.getElementById('text-dm').textContent = lang.dm;
