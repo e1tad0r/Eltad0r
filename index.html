@@ -8,6 +8,10 @@
 <meta name="description" content="Eltad0r (Ахмед Юнусов): сборка и обслуживание ПК, настройка Windows, авторский софт и Telegram-боты. Ахангаран, Узбекистан.">
 <link rel="canonical" href="https://e1tad0r.github.io/Eltad0r/">
 <link rel="icon" href="logo.jpg" type="image/jpeg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Eltad0r">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Eltad0r — Сборка ПК, IT-решения и Telegram-боты">
 <meta property="og:description" content="Сборка и обслуживание ПК, авторский софт и Telegram-боты. Ахангаран.">
@@ -74,11 +78,11 @@ summary::-webkit-details-marker{display:none}
 summary::after{content:"\f078";font-family:"Font Awesome 6 Free";font-weight:900;font-size:.8rem;color:var(--muted);transition:transform .25s}
 details[open] summary::after{transform:rotate(180deg)}
 details .group{padding:0 12px 12px}
-.card{background:var(--surface);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.card small{color:var(--muted);font-weight:700;font-size:.8rem}
+.card{background:var(--surface);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;align-items:stretch;gap:14px}
+.card small{color:var(--muted);font-weight:700;font-size:.85rem;letter-spacing:.5px}
 .card .visa{color:#60a5fa}.card .humo{color:#facc15}
-.num{display:block;font-family:'Courier New',monospace;font-size:1.2rem;font-weight:600;letter-spacing:1.2px;margin-top:6px}
-.copy{background:rgba(255,255,255,.1);color:var(--text);border:0;padding:10px 16px;border-radius:10px;font:600 .9rem inherit;font-family:inherit;cursor:pointer;transition:.3s}
+.num{display:block;white-space:nowrap;font-family:'Courier New',monospace;font-size:clamp(1rem,5.6vw,1.4rem);font-weight:600;letter-spacing:1.2px;margin-top:8px}
+.copy{width:100%;background:rgba(255,255,255,.1);color:var(--text);border:0;padding:13px 16px;border-radius:12px;font:600 1rem inherit;font-family:inherit;cursor:pointer;transition:.3s}
 .copy:hover{background:var(--accent);color:#000}
 .copy.done{background:var(--ok);color:#064e3b}
 .tg{color:#38bdf8}.ig{color:#f472b6}.ph{color:#4ade80}.vk{color:#0077ff}.dc{color:#5865f2}.st{color:#66c0f4}
@@ -143,6 +147,8 @@ footer a:hover{text-decoration:underline}
 
   <div class="group">
     <button class="btn" id="vcfBtn"><span class="ico ph"><i class="fa-solid fa-address-book"></i></span><span data-i18n="saveContact"></span></button>
+    <button class="btn" id="installBtn"><span class="ico tg"><i class="fa-solid fa-download"></i></span><span data-i18n="install"></span></button>
+    <p class="note" id="installHint" role="status" hidden></p>
     <button class="btn" id="shareBtn"><span class="ico tg"><i class="fa-solid fa-share-nodes"></i></span><span data-i18n="share"></span></button>
   </div>
 
@@ -184,6 +190,9 @@ const T = {
     copy: 'Копировать', copied: 'Скопировано!', toast: 'Номер карты скопирован',
     saveContact: 'Сохранить контакт', share: 'Поделиться визиткой', shared: 'Ссылка скопирована',
     more: 'Другие соцсети',
+    install: 'Добавить на главный экран', installed: 'Визитка добавлена',
+    hintIos: 'Нажмите «Поделиться» в Safari, затем «На экран Домой».',
+    hintOther: 'Откройте меню браузера (⋮) и выберите «Установить приложение» или «Добавить на главный экран». Для закладки нажмите Ctrl+D.',
     footer: 'Сделано при поддержке', catalog: 'Официальный каталог'
   },
   uz: {
@@ -205,6 +214,9 @@ const T = {
     copy: 'Nusxa olish', copied: 'Nusxalandi!', toast: 'Karta raqami nusxalandi',
     saveContact: 'Kontaktni saqlash', share: 'Vizitkani ulashish', shared: 'Havola nusxalandi',
     more: 'Boshqa tarmoqlar',
+    install: 'Bosh ekranga qo\'shish', installed: "Vizitka qo'shildi",
+    hintIos: "Safari'da «Ulashish» tugmasini bosing, so'ng «Bosh ekranga qo'shish»ni tanlang.",
+    hintOther: "Brauzer menyusini (⋮) oching va «Ilovani o'rnatish» yoki «Bosh ekranga qo'shish»ni tanlang. Xatcho'p uchun Ctrl+D bosing.",
     footer: "Qo'llab-quvvatlash bilan amalga oshirildi", catalog: 'Rasmiy katalog'
   }
 };
@@ -285,6 +297,38 @@ document.getElementById('vcfBtn').addEventListener('click', () => {
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
+
+// Установка на главный экран / рабочий стол
+let deferredPrompt = null;
+const installBtn = document.getElementById('installBtn');
+const installHint = document.getElementById('installHint');
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+if (isStandalone) installBtn.hidden = true;
+
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
+window.addEventListener('appinstalled', () => {
+  installBtn.hidden = true;
+  installHint.hidden = true;
+  showToast(T[lang].installed);
+});
+
+installBtn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    return;
+  }
+  installHint.textContent = isIos ? T[lang].hintIos : T[lang].hintOther;
+  installHint.hidden = !installHint.hidden;
+});
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 
 apply();
 </script>
